@@ -4,10 +4,21 @@
       <div class="container">
 
         <Notification
-          :messages="messages"
-          :timeout="3000"
-
+            :messages="messages"
+            :timeout="3000"
+            @select="sortByCategories"
         />
+
+        <div class="view__item">
+          <div class="view__item_list" @click="itemList = true">
+            <p>List</p>
+            <span class="material-icons">list</span>
+          </div>
+          <div class="view__item_grid" @click="itemList = false">
+            <p>Grid</p>
+            <span class="material-icons">view_module</span>
+          </div>
+        </div>
 
         <div class="filters">
           <div class="range-slider">
@@ -28,6 +39,7 @@
               :product="product"
               :key="product.article"
               @addToCart="addToCart"
+              :itemList="itemList"
           />
         </div>
 
@@ -50,7 +62,8 @@ export default {
       minPrice: 0,
       maxPrice: 220000,
       sortedProducts: [],
-      messages: []
+      messages: [],
+      itemList: false,
     }
   },
   computed: {
@@ -85,6 +98,7 @@ export default {
       this.sortedProducts = [...this.PRODUCTS]
       this.sortedProducts = this.sortedProducts
           .filter(item => item.price >= vm.minPrice && item.price <= vm.maxPrice)
+
     }
   },
   mounted() {
@@ -110,6 +124,30 @@ export default {
   font-size: 24px;
 }
 
+
+.view__item_list {
+  text-align: center;
+  margin-right: 30px;
+  padding: 10px;
+  border-radius: 9px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.view__item_grid {
+  text-align: center;
+  margin-right: 30px;
+  padding: 10px;
+  border-radius: 9px;
+
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .filters {
   display: flex;
   flex-direction: column;
@@ -120,6 +158,11 @@ export default {
   margin: auto 16px;
   text-align: center;
   position: relative;
+}
+
+.view__item {
+  display: flex;
+  justify-content: center;
 }
 
 .range-slider svg, .range-slider input[type=range] {

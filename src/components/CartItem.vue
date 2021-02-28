@@ -4,7 +4,7 @@
     <div class="cart-item__info">
       <p>{{ cart__item_data.model }}</p>
       <p>{{ cart__item_data.price | toFix | formatPrice }}</p>
-      <p>{{ cart__item_data.article }}</p>
+      <p>Article: {{ cart__item_data.article }}</p>
     </div>
     <div class="cart-item__quantity">
       <p>Qty:</p>
@@ -63,6 +63,7 @@ export default {
 
   }
 }
+
 .quantity__btn {
   cursor: pointer;
 }

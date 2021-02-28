@@ -6,7 +6,7 @@
           <div class="navbar-content">
             <div class="logo">
               <router-link to="/catalog">
-                VUE-CLI
+                Online shop
               </router-link>
             </div>
             <ul class="navbar-list">
@@ -31,7 +31,6 @@ export default {
   data() {
     return {
       links: [
-        {title: 'Login', url: '/'},
         {title: 'Catalog', url: '/catalog'}
       ]
     }

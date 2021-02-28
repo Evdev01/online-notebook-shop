@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import './assets/scss/main.scss'
 import 'material-design-icons-iconfont'
+import VueCarousel from 'vue-carousel'
+
+Vue.use(VueCarousel)
 
 
 Vue.config.productionTip = false

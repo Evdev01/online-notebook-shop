@@ -95,5 +95,14 @@ export default {
   padding: 8px;
   color: #ffffff;
   background: red;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.material-icons:hover,
+.submit_btn {
+  cursor: pointer;
 }
 </style>

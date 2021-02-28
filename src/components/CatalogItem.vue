@@ -1,12 +1,16 @@
 <template>
-  <div class="catalog__item">
+  <div class="catalog__item" :class="{catalog__item_list: itemList}">
     <img :src="product.image" alt="" @click="showPopupInfo">
-    <h3 class="catalog__item-title" @click="showPopupInfo">{{ product.model }}</h3>
-    <p class="catalog__item-stock">{{ product.stock }} left in stock</p>
-    <p class="catalog__item-description">{{ product.description }}</p>
-    <div class="price__block">
-      <p class="price-cost">{{ product.price | toFix | formatPrice }}</p>
-      <button class="price__block-btn btn" @click="addToCart">Add to cart</button>
+    <div class="catalog__item_wrapper">
+      <div :class="{catalog__item_info: itemList}">
+        <h3 class="catalog__item-title" @click="showPopupInfo">{{ product.model }}</h3>
+        <p class="catalog__item-stockCount">{{ product.stockCount }} left in stockCount</p>
+        <p class="catalog__item-description">{{ product.description }}</p>
+      </div>
+      <div class="price__block">
+        <p class="price-cost">{{ product.price | toFix | formatPrice }}</p>
+        <button class="price__block-btn btn" @click="addToCart">Add to cart</button>
+      </div>
     </div>
     <Popup
         v-if="isInfoPopupVisible"
@@ -15,9 +19,23 @@
         :popupModel="product.model"
         @rightBtnAction="addToCart"
     >
-      <img :src="product.image" alt="loading">
+        <carousel
+            :per-page="1"
+            :pagination-enabled="true"
+            pagination-color="#b3b3b3"
+            pagination-active-color="#494ce8"
+            :autoplay="true"
+            :loop="true"
+        >
+          <slide
+              v-for="(slide, index) in product.gallery"
+          >
+            <img :src="slide.img" alt="loading">
+          </slide>
+        </carousel>
+
       <h3 class="catalog__item-title">{{ product.model }}</h3>
-      <p class="catalog__item-stock">{{ product.stock }} left in stock</p>
+      <p class="catalog__item-stockCount">{{ product.stockCount }} left in stockCount</p>
       <p class="catalog__item-description">{{ product.description }}</p>
       <div class="price__block">
         <p class="price-cost">{{ product.price | toFix | formatPrice }}</p>
@@ -30,6 +48,7 @@
 import Popup from '@/popup/Popup'
 import formatPrice from '@/filters/price-format'
 import toFix from '@/filters/toFix'
+import {mapGetters} from 'vuex'
 
 export default {
   name: "CatalogItem",
@@ -45,11 +64,21 @@ export default {
       default() {
         return {}
       }
+    },
+    itemList: {
+      type: Boolean,
+      default() {
+        return false
+      }
     }
+  },
+  computed: {
+    ...mapGetters(['PRODUCTS'])
   },
   methods: {
     addToCart() {
       this.$emit('addToCart', this.product)
+      console.log(this.product)
     },
     showPopupInfo() {
       this.isInfoPopupVisible = true
@@ -66,6 +95,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.catalog__item_wrapper {
+  flex-direction: column;
+}
+
+.catalog__item_info {
+  margin-bottom: 30px;
+  display: flex;
+}
+
 .catalog__item {
   width: 30%;
   text-align: center;
@@ -73,6 +112,12 @@ export default {
   padding: 10px 30px;
   background: #ffffff;
   margin: 20px 10px;
+
+  &.catalog__item_list {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
 
   &-title {
     font-size: 24px;
@@ -84,7 +129,7 @@ export default {
     }
   }
 
-  &-stock {
+  &-stockCount {
     margin: 15px 0;
     color: #d17581;
   }
