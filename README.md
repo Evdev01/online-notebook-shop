@@ -8,6 +8,11 @@ yarn install
 ### Compiles and hot-reloads for development
 ```
 yarn serve
+
+
+### Start the server(db-json)
+```
+npm run jsdb
 ```
 
 ### Compiles and minifies for production

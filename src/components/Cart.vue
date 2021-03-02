@@ -2,9 +2,9 @@
   <div class="wrapper-content wrapper-content--fixed">
     <section>
       <div class="container">
-        <p class="cart__message" v-if="!cart__data.length">There are no products in cart...</p>
+        <p class="cart__message" v-if="!CART.length">There are no products in cart...</p>
       <CartItem
-          v-for="(item, index) in cart__data"
+          v-for="(item, index) in CART"
           :key="item.article"
           :cart__item_data="item"
           @deleteFromCart="deleteFromCart(index)"
@@ -27,7 +27,7 @@
 
 <script>
 import CartItem from '@/components/CartItem'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "Cart",
@@ -41,6 +41,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['CART']),
     cartTotalCost() {
       let result = []
 

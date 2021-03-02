@@ -1,9 +1,12 @@
+let cart = window.localStorage.getItem('cart')
+
+
 import axios from 'axios'
 
 export default {
     state: {
         products: [],
-        cart: []
+        cart: cart ? JSON.parse(cart) : []
     },
     mutations: {
         SET_PRODUCTS_TO_STATE(state, products) {
@@ -11,6 +14,9 @@ export default {
         },
         REMOVE_FROM_CART(state, index) {
             state.cart.splice(index, 1)
+        },
+        saveData(state) {
+            window.localStorage.setItem('cart', JSON.stringify(state.cart))
         },
         SET_CART (state, product) {
             if (state.cart.length) {
@@ -27,6 +33,8 @@ export default {
             } else {
                 state.cart.push(product)
             }
+
+            this.commit('saveData')
         },
         INCREMENT(state, index) {
             state.cart[index].quantity++
@@ -54,6 +62,8 @@ export default {
         },
         DELETE_FROM_CART({commit}, index) {
             commit('REMOVE_FROM_CART', index)
+
+            this.commit('saveData')
         },
         INCREMENT_CART_ITEM({commit}, index) {
             commit('INCREMENT', index)

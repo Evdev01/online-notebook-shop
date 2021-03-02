@@ -51,12 +51,12 @@
 <script>
 import CatalogItem from '@/components/CatalogItem'
 import {mapActions, mapGetters} from 'vuex'
-import Cart from '@/components/Cart'
+// import Cart from '@/components/Cart'
 import Notification from '@/components/notifications/Notification'
 
 export default {
   name: "Catalog",
-  components: {Notification, Cart, CatalogItem},
+  components: {Notification, CatalogItem},
   data() {
     return {
       minPrice: 0,
